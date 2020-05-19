@@ -1,12 +1,18 @@
 package com.booking.tickets;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.booking.tickets.lib.Injector;
+import com.booking.tickets.model.Movie;
+import com.booking.tickets.service.MovieService;
 
 public class Main {
-    private static final Logger LOGGER = LogManager.getLogger(Main.class);
+    private static final Injector INJECTOR = Injector.getInstance("com.booking.tickets");
 
     public static void main(String[] args) {
-        LOGGER.warn("test");
+        Movie movie = new Movie();
+        movie.setTitle("Fast and Furious");
+        MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
+        movieService.add(movie);
+
+        movieService.getAll().forEach(System.out::println);
     }
 }
