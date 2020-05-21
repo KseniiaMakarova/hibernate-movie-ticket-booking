@@ -15,9 +15,9 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Movie movie;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private CinemaHall cinemaHall;
     private LocalDateTime sessionTime;
 
