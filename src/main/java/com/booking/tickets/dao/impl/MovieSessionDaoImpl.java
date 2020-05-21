@@ -30,8 +30,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Root<MovieSession> root = query.from(MovieSession.class);
             Predicate idPredicate
                     = criteriaBuilder.equal(root.get("movie"), movieId);
-            Predicate datePredicate = criteriaBuilder
-                    .between(root.get("sessionTime"), date.atStartOfDay(), date.atTime(LocalTime.MAX));
+            Predicate datePredicate = criteriaBuilder.between(
+                    root.get("sessionTime"), date.atStartOfDay(), date.atTime(LocalTime.MAX));
             return session.createQuery(query.where(idPredicate, datePredicate)).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(
