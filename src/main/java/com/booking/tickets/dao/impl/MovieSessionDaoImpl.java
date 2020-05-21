@@ -6,6 +6,7 @@ import com.booking.tickets.lib.Dao;
 import com.booking.tickets.model.MovieSession;
 import com.booking.tickets.util.HibernateUtil;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -29,8 +30,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Root<MovieSession> root = query.from(MovieSession.class);
             Predicate idPredicate
                     = criteriaBuilder.equal(root.get("movie"), movieId);
-            Predicate datePredicate
-                    = criteriaBuilder.greaterThan(root.get("sessionTime"), date.atStartOfDay());
+            Predicate datePredicate = criteriaBuilder
+                    .between(root.get("sessionTime"), date.atStartOfDay(), date.atTime(LocalTime.MAX));
             return session.createQuery(query.where(idPredicate, datePredicate)).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(

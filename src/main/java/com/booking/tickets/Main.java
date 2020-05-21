@@ -46,20 +46,21 @@ public class Main {
         cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession parasiteSession = new MovieSession();
-        parasiteSession.setSessionTime(LocalDateTime.of(2020, 10, 24, 18, 30));
+        parasiteSession.setSessionTime(LocalDateTime.of(2007, 1, 19, 18, 30));
         parasiteSession.setMovie(parasite);
         parasiteSession.setCinemaHall(blueCinemaHall);
         movieSessionService.add(parasiteSession);
 
         MovieSession jojoRabbitSession = new MovieSession();
-        jojoRabbitSession.setSessionTime(LocalDateTime.of(2007, 10, 24, 21, 30));
+        jojoRabbitSession.setSessionTime(LocalDateTime.of(2020, 5, 21, 21, 0));
         jojoRabbitSession.setMovie(jojoRabbit);
         jojoRabbitSession.setCinemaHall(redCinemaHall);
         movieSessionService.add(jojoRabbitSession);
 
-        movieSessionService.findAvailableSessions(parasite.getId(), LocalDate.now())
+        LocalDate today = LocalDate.of(2020, 5, 21);
+        movieSessionService.findAvailableSessions(parasite.getId(), today)
                 .forEach(System.out::println);
-        movieSessionService.findAvailableSessions(jojoRabbit.getId(), LocalDate.now())
+        movieSessionService.findAvailableSessions(jojoRabbit.getId(), today)
                 .forEach(System.out::println);
     }
 }
