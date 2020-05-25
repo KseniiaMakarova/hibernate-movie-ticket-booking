@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao {
             Root<User> root = query.from(User.class);
             return session.createQuery(
                     query.where(criteriaBuilder.equal(root.get("login"), email)))
-                    .getSingleResult();
+                    .uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException(
                     "There was an error retrieving a user with email " + email, e);

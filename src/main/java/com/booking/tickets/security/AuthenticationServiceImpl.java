@@ -1,13 +1,11 @@
 package com.booking.tickets.security;
 
 import com.booking.tickets.exception.AuthenticationException;
-import com.booking.tickets.exception.DataProcessingException;
 import com.booking.tickets.lib.Inject;
 import com.booking.tickets.lib.Service;
 import com.booking.tickets.model.User;
 import com.booking.tickets.service.UserService;
 import com.booking.tickets.util.HashUtil;
-import javax.persistence.NoResultException;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -16,18 +14,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
-        User user;
-        try {
-            user = userService.findByEmail(email);
-        } catch (DataProcessingException e) {
-            if (e.getCause().getClass() == NoResultException.class) {
-                throw new AuthenticationException("This login does not exist");
-            }
-            throw e;
-        }
-        if (!HashUtil.hashPassword(password, user.getSalt())
+        User user = userService.findByEmail(email);
+        if (user == null || !HashUtil.hashPassword(password, user.getSalt())
                 .equals(user.getPassword())) {
-            throw new AuthenticationException("The password is incorrect");
+            throw new AuthenticationException("The login or password is incorrect");
         }
         return user;
     }
