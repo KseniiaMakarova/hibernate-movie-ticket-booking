@@ -5,6 +5,7 @@ import com.booking.tickets.exception.DataProcessingException;
 import com.booking.tickets.lib.Dao;
 import com.booking.tickets.model.User;
 import com.booking.tickets.util.HibernateUtil;
+import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -42,7 +43,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> query
@@ -50,7 +51,7 @@ public class UserDaoImpl implements UserDao {
             Root<User> root = query.from(User.class);
             return session.createQuery(
                     query.where(criteriaBuilder.equal(root.get("login"), email)))
-                    .uniqueResult();
+                    .uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException(
                     "There was an error retrieving a user with email " + email, e);
