@@ -4,6 +4,7 @@ import com.booking.tickets.exception.AuthenticationException;
 import com.booking.tickets.lib.Inject;
 import com.booking.tickets.lib.Service;
 import com.booking.tickets.model.User;
+import com.booking.tickets.service.ShoppingCartService;
 import com.booking.tickets.service.UserService;
 import com.booking.tickets.util.HashUtil;
 
@@ -11,6 +12,8 @@ import com.booking.tickets.util.HashUtil;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserService userService;
+    @Inject
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
@@ -29,6 +32,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         byte[] salt = HashUtil.getSalt();
         user.setSalt(salt);
         user.setPassword(HashUtil.hashPassword(password, salt));
-        return userService.add(user);
+        User userFromDb = userService.add(user);
+        shoppingCartService.registerNewShoppingCart(userFromDb);
+        return userFromDb;
     }
 }

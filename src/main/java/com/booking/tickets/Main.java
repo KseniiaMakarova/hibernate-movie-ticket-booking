@@ -5,12 +5,16 @@ import com.booking.tickets.lib.Injector;
 import com.booking.tickets.model.CinemaHall;
 import com.booking.tickets.model.Movie;
 import com.booking.tickets.model.MovieSession;
+import com.booking.tickets.model.User;
 import com.booking.tickets.security.AuthenticationService;
 import com.booking.tickets.service.CinemaHallService;
 import com.booking.tickets.service.MovieService;
 import com.booking.tickets.service.MovieSessionService;
+import com.booking.tickets.service.ShoppingCartService;
+import com.booking.tickets.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +29,10 @@ public class Main {
             = (CinemaHallService) INJECTOR.getInstance(CinemaHallService.class);
     private static AuthenticationService authenticationService
             = (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
+    private static UserService userService
+            = (UserService) INJECTOR.getInstance(UserService.class);
+    private static ShoppingCartService shoppingCartService
+            = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
 
     public static void main(String[] args) {
         Movie parasite = new Movie();
@@ -67,8 +75,9 @@ public class Main {
         LocalDate today = LocalDate.of(2020, 5, 21);
         movieSessionService.findAvailableSessions(parasite.getId(), today)
                 .forEach(System.out::println);
-        movieSessionService.findAvailableSessions(jojoRabbit.getId(), today)
-                .forEach(System.out::println);
+        List<MovieSession> availableSessions
+                = movieSessionService.findAvailableSessions(jojoRabbit.getId(), today);
+        availableSessions.forEach(System.out::println);
 
         authenticationService.register("kseniia.makarova.kyiv@gmail.com", "12345678");
         try {
@@ -87,5 +96,10 @@ public class Main {
         } catch (AuthenticationException e) {
             LOGGER.warn("Authentication failed: " + e.getMessage());
         }
+
+        User user = userService.findByEmail("kseniia.makarova.kyiv@gmail.com");
+        System.out.println(shoppingCartService.getByUser(user));
+        shoppingCartService.addSession(availableSessions.get(0), user);
+        System.out.println(shoppingCartService.getByUser(user));
     }
 }
