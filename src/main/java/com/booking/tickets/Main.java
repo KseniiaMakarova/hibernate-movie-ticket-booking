@@ -5,11 +5,13 @@ import com.booking.tickets.lib.Injector;
 import com.booking.tickets.model.CinemaHall;
 import com.booking.tickets.model.Movie;
 import com.booking.tickets.model.MovieSession;
+import com.booking.tickets.model.ShoppingCart;
 import com.booking.tickets.model.User;
 import com.booking.tickets.security.AuthenticationService;
 import com.booking.tickets.service.CinemaHallService;
 import com.booking.tickets.service.MovieService;
 import com.booking.tickets.service.MovieSessionService;
+import com.booking.tickets.service.OrderService;
 import com.booking.tickets.service.ShoppingCartService;
 import com.booking.tickets.service.UserService;
 import java.time.LocalDate;
@@ -33,6 +35,8 @@ public class Main {
             = (UserService) INJECTOR.getInstance(UserService.class);
     private static ShoppingCartService shoppingCartService
             = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+    private static OrderService orderService
+            = (OrderService) INJECTOR.getInstance(OrderService.class);
 
     public static void main(String[] args) {
         Movie parasite = new Movie();
@@ -98,8 +102,12 @@ public class Main {
         }
 
         User user = userService.findByEmail("kseniia.makarova.kyiv@gmail.com");
-        System.out.println(shoppingCartService.getByUser(user));
         shoppingCartService.addSession(availableSessions.get(0), user);
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
+        System.out.println(shoppingCart);
+
+        orderService.completeOrder(shoppingCart.getTickets(), user);
+        orderService.getOrderHistory(user).forEach(System.out::println);
         System.out.println(shoppingCartService.getByUser(user));
     }
 }

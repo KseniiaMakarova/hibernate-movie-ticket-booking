@@ -17,5 +17,6 @@
         <mapping class="com.booking.tickets.model.User"/>
         <mapping class="com.booking.tickets.model.ShoppingCart"/>
         <mapping class="com.booking.tickets.model.Ticket"/>
+        <mapping class="com.booking.tickets.model.Order"/>
     </session-factory>
 </hibernate-configuration>
