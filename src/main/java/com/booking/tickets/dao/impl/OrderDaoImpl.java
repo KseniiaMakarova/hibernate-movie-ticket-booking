@@ -7,6 +7,7 @@ import com.booking.tickets.model.Order;
 import com.booking.tickets.model.User;
 import com.booking.tickets.util.HibernateUtil;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -54,7 +55,7 @@ public class OrderDaoImpl implements OrderDao {
             root.fetch("tickets", JoinType.LEFT);
             return session.createQuery(
                     query.where(criteriaBuilder.equal(root.get("user"), user)))
-                    .getResultList();
+                    .getResultStream().distinct().collect(Collectors.toList());
         } catch (Exception e) {
             throw new DataProcessingException("There was an error retrieving all orders of user "
                     + user, e);
