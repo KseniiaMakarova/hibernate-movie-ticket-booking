@@ -1,6 +1,7 @@
 package com.booking.tickets.model;
 
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -49,6 +50,25 @@ public class ShoppingCart {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ShoppingCart that = (ShoppingCart) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(tickets, that.tickets)
+                && Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tickets, user);
     }
 
     @Override

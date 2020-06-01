@@ -1,5 +1,6 @@
 package com.booking.tickets.model;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,6 +43,25 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(id, ticket.id)
+                && Objects.equals(movieSession, ticket.movieSession)
+                && Objects.equals(user, ticket.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, movieSession, user);
     }
 
     @Override

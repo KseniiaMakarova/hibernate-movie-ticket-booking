@@ -1,6 +1,7 @@
 package com.booking.tickets.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,6 +55,26 @@ public class MovieSession {
 
     public void setSessionTime(LocalDateTime sessionTime) {
         this.sessionTime = sessionTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MovieSession that = (MovieSession) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(movie, that.movie)
+                && Objects.equals(cinemaHall, that.cinemaHall)
+                && Objects.equals(sessionTime, that.sessionTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, movie, cinemaHall, sessionTime);
     }
 
     @Override
