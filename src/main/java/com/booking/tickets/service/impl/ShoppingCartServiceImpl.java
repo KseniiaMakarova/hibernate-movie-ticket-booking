@@ -9,7 +9,6 @@ import com.booking.tickets.model.ShoppingCart;
 import com.booking.tickets.model.Ticket;
 import com.booking.tickets.model.User;
 import com.booking.tickets.service.ShoppingCartService;
-import java.util.Collections;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -43,7 +42,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void clear(ShoppingCart shoppingCart) {
-        shoppingCart.setTickets(Collections.emptyList());
+        shoppingCart.getTickets().clear();
         shoppingCartDao.update(shoppingCart);
     }
 }
