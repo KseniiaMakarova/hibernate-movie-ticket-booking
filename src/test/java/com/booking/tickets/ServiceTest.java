@@ -194,7 +194,7 @@ public class ServiceTest {
     }
 
     @AfterClass
-    public static void afterClass() throws Exception {
+    public static void afterClass() {
         HibernateUtil.getSessionFactory().close();
     }
 }
