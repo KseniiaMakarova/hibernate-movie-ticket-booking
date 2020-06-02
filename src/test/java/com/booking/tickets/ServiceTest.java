@@ -184,8 +184,8 @@ public class ServiceTest {
     public void checkOrderHistory() {
         User user = users.get(0);
         MovieSession jojoRabbitSession = movieSessions.get(1);
-        List<Ticket> tickets = shoppingCartService.getByUser(user).getTickets();
         shoppingCartService.addSession(jojoRabbitSession, user);
+        List<Ticket> tickets = shoppingCartService.getByUser(user).getTickets();
         Assert.assertEquals(0, orderService.getOrderHistory(user).size());
         orderService.completeOrder(tickets, user);
         Assert.assertEquals(1, orderService.getOrderHistory(user).size());
