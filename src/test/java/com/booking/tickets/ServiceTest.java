@@ -14,6 +14,8 @@ import com.booking.tickets.service.MovieSessionService;
 import com.booking.tickets.service.OrderService;
 import com.booking.tickets.service.ShoppingCartService;
 import com.booking.tickets.service.UserService;
+import com.booking.tickets.util.HibernateUtil;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -189,5 +191,10 @@ public class ServiceTest {
         Assert.assertEquals(0, orderService.getOrderHistory(user).size());
         orderService.completeOrder(tickets, user);
         Assert.assertEquals(1, orderService.getOrderHistory(user).size());
+    }
+
+    @AfterClass
+    public static void afterClass() throws Exception {
+        HibernateUtil.getSessionFactory().close();
     }
 }
