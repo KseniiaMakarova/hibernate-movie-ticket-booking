@@ -1,8 +1,6 @@
 package com.booking.tickets.service.impl;
 
 import com.booking.tickets.dao.OrderDao;
-import com.booking.tickets.lib.Inject;
-import com.booking.tickets.lib.Service;
 import com.booking.tickets.model.Order;
 import com.booking.tickets.model.ShoppingCart;
 import com.booking.tickets.model.Ticket;
@@ -11,13 +9,17 @@ import com.booking.tickets.service.OrderService;
 import com.booking.tickets.service.ShoppingCartService;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Inject
-    private OrderDao orderDao;
-    @Inject
-    private ShoppingCartService shoppingCartService;
+    private final OrderDao orderDao;
+    private final ShoppingCartService shoppingCartService;
+
+    public OrderServiceImpl(OrderDao orderDao, ShoppingCartService shoppingCartService) {
+        this.orderDao = orderDao;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @Override
     public Order completeOrder(List<Ticket> tickets, User user) {
