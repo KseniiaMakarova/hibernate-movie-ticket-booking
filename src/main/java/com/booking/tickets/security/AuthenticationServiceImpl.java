@@ -1,19 +1,22 @@
 package com.booking.tickets.security;
 
 import com.booking.tickets.exception.AuthenticationException;
-import com.booking.tickets.lib.Inject;
-import com.booking.tickets.lib.Service;
 import com.booking.tickets.model.User;
 import com.booking.tickets.service.ShoppingCartService;
 import com.booking.tickets.service.UserService;
 import com.booking.tickets.util.HashUtil;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Inject
-    private UserService userService;
-    @Inject
-    private ShoppingCartService shoppingCartService;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+
+    public AuthenticationServiceImpl(
+            UserService userService, ShoppingCartService shoppingCartService) {
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {

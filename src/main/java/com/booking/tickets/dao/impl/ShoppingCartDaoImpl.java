@@ -2,10 +2,8 @@ package com.booking.tickets.dao.impl;
 
 import com.booking.tickets.dao.ShoppingCartDao;
 import com.booking.tickets.exception.DataProcessingException;
-import com.booking.tickets.lib.Dao;
 import com.booking.tickets.model.ShoppingCart;
 import com.booking.tickets.model.User;
-import com.booking.tickets.util.HibernateUtil;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -13,18 +11,25 @@ import javax.persistence.criteria.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
     private static final Logger LOGGER = LogManager.getLogger(ShoppingCartDaoImpl.class);
+    private final SessionFactory sessionFactory;
+
+    public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(shoppingCart);
             transaction.commit();
@@ -45,7 +50,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart getByUser(User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<ShoppingCart> query
                     = criteriaBuilder.createQuery(ShoppingCart.class);
@@ -65,7 +70,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(shoppingCart);
             transaction.commit();

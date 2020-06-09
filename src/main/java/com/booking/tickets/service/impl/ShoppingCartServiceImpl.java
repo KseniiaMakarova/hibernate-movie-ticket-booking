@@ -2,21 +2,22 @@ package com.booking.tickets.service.impl;
 
 import com.booking.tickets.dao.ShoppingCartDao;
 import com.booking.tickets.dao.TicketDao;
-import com.booking.tickets.lib.Inject;
-import com.booking.tickets.lib.Service;
 import com.booking.tickets.model.MovieSession;
 import com.booking.tickets.model.ShoppingCart;
 import com.booking.tickets.model.Ticket;
 import com.booking.tickets.model.User;
 import com.booking.tickets.service.ShoppingCartService;
-import java.util.Collections;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    @Inject
-    private ShoppingCartDao shoppingCartDao;
-    @Inject
-    private TicketDao ticketDao;
+    private final ShoppingCartDao shoppingCartDao;
+    private final TicketDao ticketDao;
+
+    public ShoppingCartServiceImpl(ShoppingCartDao shoppingCartDao, TicketDao ticketDao) {
+        this.shoppingCartDao = shoppingCartDao;
+        this.ticketDao = ticketDao;
+    }
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
@@ -43,7 +44,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void clear(ShoppingCart shoppingCart) {
-        shoppingCart.setTickets(Collections.emptyList());
+        shoppingCart.getTickets().clear();
         shoppingCartDao.update(shoppingCart);
     }
 }

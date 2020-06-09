@@ -1,7 +1,7 @@
 package com.booking.tickets;
 
+import com.booking.tickets.context.AppConfig;
 import com.booking.tickets.exception.AuthenticationException;
-import com.booking.tickets.lib.Injector;
 import com.booking.tickets.model.CinemaHall;
 import com.booking.tickets.model.Movie;
 import com.booking.tickets.model.MovieSession;
@@ -19,24 +19,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
-    private static final Injector INJECTOR = Injector.getInstance("com.booking.tickets");
-    private static MovieService movieService
-            = (MovieService) INJECTOR.getInstance(MovieService.class);
-    private static MovieSessionService movieSessionService
-            = (MovieSessionService) INJECTOR.getInstance(MovieSessionService.class);
-    private static CinemaHallService cinemaHallService
-            = (CinemaHallService) INJECTOR.getInstance(CinemaHallService.class);
-    private static AuthenticationService authenticationService
-            = (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
-    private static UserService userService
-            = (UserService) INJECTOR.getInstance(UserService.class);
-    private static ShoppingCartService shoppingCartService
-            = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
-    private static OrderService orderService
-            = (OrderService) INJECTOR.getInstance(OrderService.class);
+    private static final AnnotationConfigApplicationContext context
+            = new AnnotationConfigApplicationContext(AppConfig.class);
+    private static final MovieService movieService
+            = context.getBean(MovieService.class);
+    private static final MovieSessionService movieSessionService
+            = context.getBean(MovieSessionService.class);
+    private static final CinemaHallService cinemaHallService
+            = context.getBean(CinemaHallService.class);
+    private static final AuthenticationService authenticationService
+            = context.getBean(AuthenticationService.class);
+    private static final UserService userService
+            = context.getBean(UserService.class);
+    private static final ShoppingCartService shoppingCartService
+            = context.getBean(ShoppingCartService.class);
+    private static final OrderService orderService
+            = context.getBean(OrderService.class);
 
     public static void main(String[] args) {
         Movie parasite = new Movie();
