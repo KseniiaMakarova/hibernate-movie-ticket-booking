@@ -13,40 +13,28 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OrderDaoImpl implements OrderDao {
+public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
     private static final Logger LOGGER = LogManager.getLogger(OrderDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     public OrderDaoImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public Order add(Order order) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(order);
-            transaction.commit();
-            LOGGER.info(order + " was inserted to DB");
-            return order;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("There was an error inserting "
-                    + order, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    public Order add(Order element) {
+        Order order = super.add(element);
+        LOGGER.info(element + " was inserted to DB");
+        return order;
+    }
+
+    @Override
+    public List<Order> getAll() {
+        return super.getAll(Order.class);
     }
 
     @Override

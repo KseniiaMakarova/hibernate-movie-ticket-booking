@@ -4,6 +4,7 @@ import com.booking.tickets.dao.ShoppingCartDao;
 import com.booking.tickets.exception.DataProcessingException;
 import com.booking.tickets.model.ShoppingCart;
 import com.booking.tickets.model.User;
+import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -16,36 +17,25 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ShoppingCartDaoImpl implements ShoppingCartDao {
+public class ShoppingCartDaoImpl extends GenericDaoImpl<ShoppingCart> implements ShoppingCartDao {
     private static final Logger LOGGER = LogManager.getLogger(ShoppingCartDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public ShoppingCart add(ShoppingCart shoppingCart) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(shoppingCart);
-            transaction.commit();
-            LOGGER.info(shoppingCart + " was inserted to DB");
-            return shoppingCart;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("There was an error inserting "
-                    + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    public ShoppingCart add(ShoppingCart element) {
+        ShoppingCart shoppingCart = super.add(element);
+        LOGGER.info(element + " was inserted to DB");
+        return shoppingCart;
+    }
+
+    @Override
+    public List<ShoppingCart> getAll() {
+        return super.getAll(ShoppingCart.class);
     }
 
     @Override

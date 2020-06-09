@@ -3,6 +3,7 @@ package com.booking.tickets.dao.impl;
 import com.booking.tickets.dao.UserDao;
 import com.booking.tickets.exception.DataProcessingException;
 import com.booking.tickets.model.User;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,40 +12,28 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     public UserDaoImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public User add(User user) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-            LOGGER.info(user + " was inserted to DB");
-            return user;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("There was an error inserting "
-                    + user, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    public User add(User element) {
+        User user = super.add(element);
+        LOGGER.info(element + " was inserted to DB");
+        return user;
+    }
+
+    @Override
+    public List<User> getAll() {
+        return super.getAll(User.class);
     }
 
     @Override

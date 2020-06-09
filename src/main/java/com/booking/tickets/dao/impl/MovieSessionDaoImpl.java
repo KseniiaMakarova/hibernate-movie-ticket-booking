@@ -14,16 +14,28 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MovieSessionDaoImpl implements MovieSessionDao {
+public class MovieSessionDaoImpl extends GenericDaoImpl<MovieSession> implements MovieSessionDao {
     private static final Logger LOGGER = LogManager.getLogger(MovieSessionDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     public MovieSessionDaoImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public MovieSession add(MovieSession element) {
+        MovieSession movieSession = super.add(element);
+        LOGGER.info(element + " was inserted to DB");
+        return movieSession;
+    }
+
+    @Override
+    public List<MovieSession> getAll() {
+        return super.getAll(MovieSession.class);
     }
 
     @Override
@@ -41,30 +53,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         } catch (Exception e) {
             throw new DataProcessingException(
                     "There was an error retrieving available sessions", e);
-        }
-    }
-
-    @Override
-    public MovieSession add(MovieSession movieSession) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(movieSession);
-            transaction.commit();
-            LOGGER.info(movieSession + " was inserted to DB");
-            return movieSession;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("There was an error inserting "
-                    + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }
