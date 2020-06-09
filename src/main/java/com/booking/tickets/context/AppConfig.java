@@ -1,12 +1,5 @@
 package com.booking.tickets.context;
 
-import com.booking.tickets.model.CinemaHall;
-import com.booking.tickets.model.Movie;
-import com.booking.tickets.model.MovieSession;
-import com.booking.tickets.model.Order;
-import com.booking.tickets.model.ShoppingCart;
-import com.booking.tickets.model.Ticket;
-import com.booking.tickets.model.User;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -46,8 +39,7 @@ public class AppConfig {
         properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         sessionFactory.setHibernateProperties(properties);
-        sessionFactory.setAnnotatedClasses(User.class, Movie.class, CinemaHall.class,
-                MovieSession.class, Ticket.class, ShoppingCart.class, Order.class);
+        sessionFactory.setPackagesToScan("com.booking.tickets.model");
         return sessionFactory;
     }
 }
