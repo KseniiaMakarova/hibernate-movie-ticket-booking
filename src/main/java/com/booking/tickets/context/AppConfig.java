@@ -13,8 +13,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages =
-        {"com.booking.tickets.dao", "com.booking.tickets.service",
-                "com.booking.tickets.security", "com.booking.tickets.util"})
+        {"com.booking.tickets.entity", "com.booking.tickets.security", "com.booking.tickets.util"})
 public class AppConfig {
     private final Environment env;
 
@@ -40,7 +39,7 @@ public class AppConfig {
         properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         sessionFactory.setHibernateProperties(properties);
-        sessionFactory.setPackagesToScan("com.booking.tickets.model");
+        sessionFactory.setPackagesToScan("com.booking.tickets.entity");
         return sessionFactory;
     }
 }
