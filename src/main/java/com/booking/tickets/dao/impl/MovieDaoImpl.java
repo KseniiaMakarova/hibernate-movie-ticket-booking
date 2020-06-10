@@ -27,4 +27,9 @@ public class MovieDaoImpl extends GenericDaoImpl<Movie> implements MovieDao {
     public List<Movie> getAll() {
         return super.getAll(Movie.class);
     }
+
+    @Override
+    public Movie get(Long id) {
+        return super.get(Movie.class, id);
+    }
 }

@@ -39,6 +39,11 @@ public class ShoppingCartDaoImpl extends GenericDaoImpl<ShoppingCart> implements
     }
 
     @Override
+    public ShoppingCart get(Long id) {
+        return super.get(ShoppingCart.class, id);
+    }
+
+    @Override
     public ShoppingCart getByUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

@@ -37,6 +37,11 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public User get(Long id) {
+        return super.get(User.class, id);
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

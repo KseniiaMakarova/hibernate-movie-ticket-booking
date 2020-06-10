@@ -49,4 +49,8 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
                     + clazz.getSimpleName() + " entities", e);
         }
     }
+
+    protected T get(Class<T> clazz, Long id) {
+        return sessionFactory.openSession().get(clazz, id);
+    }
 }

@@ -39,6 +39,11 @@ public class MovieSessionDaoImpl extends GenericDaoImpl<MovieSession> implements
     }
 
     @Override
+    public MovieSession get(Long id) {
+        return super.get(MovieSession.class, id);
+    }
+
+    @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

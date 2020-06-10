@@ -38,6 +38,11 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
     }
 
     @Override
+    public Order get(Long id) {
+        return super.get(Order.class, id);
+    }
+
+    @Override
     public List<Order> getOrderHistory(User user) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
