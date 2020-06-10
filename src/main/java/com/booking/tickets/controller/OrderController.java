@@ -51,7 +51,6 @@ public class OrderController {
     private OrderResponseDto orderToOrderResponseDto(Order order) {
         OrderResponseDto orderResponseDto = new OrderResponseDto();
         orderResponseDto.setId(order.getId());
-        orderResponseDto.setUserId(order.getUser().getId());
         orderResponseDto.setOrderDate(
                 order.getOrderDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
         orderResponseDto.setTicketIds(order.getTickets()

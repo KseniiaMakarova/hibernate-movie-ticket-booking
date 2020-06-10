@@ -4,6 +4,7 @@ public class MovieSessionResponseDto {
     private Long id;
     private Long movieId;
     private Long cinemaHallId;
+    private String sessionDate;
     private String sessionTime;
 
     public Long getId() {
@@ -28,6 +29,14 @@ public class MovieSessionResponseDto {
 
     public void setCinemaHallId(Long cinemaHallId) {
         this.cinemaHallId = cinemaHallId;
+    }
+
+    public String getSessionDate() {
+        return sessionDate;
+    }
+
+    public void setSessionDate(String sessionDate) {
+        this.sessionDate = sessionDate;
     }
 
     public String getSessionTime() {

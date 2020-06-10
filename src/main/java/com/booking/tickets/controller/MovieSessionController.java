@@ -62,8 +62,11 @@ public class MovieSessionController {
         movieSessionResponseDto.setId(movieSession.getId());
         movieSessionResponseDto.setMovieId(movieSession.getMovie().getId());
         movieSessionResponseDto.setCinemaHallId(movieSession.getCinemaHall().getId());
+        LocalDateTime sessionTime = movieSession.getSessionTime();
+        movieSessionResponseDto.setSessionDate(
+                sessionTime.format(DateTimeFormatter.ISO_LOCAL_DATE));
         movieSessionResponseDto.setSessionTime(
-                movieSession.getSessionTime().format(DateTimeFormatter.ISO_LOCAL_DATE));
+                sessionTime.format(DateTimeFormatter.ISO_LOCAL_TIME));
         return movieSessionResponseDto;
     }
 }
