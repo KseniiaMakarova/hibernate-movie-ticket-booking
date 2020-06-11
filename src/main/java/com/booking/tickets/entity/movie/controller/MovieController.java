@@ -1,6 +1,6 @@
 package com.booking.tickets.entity.movie.controller;
 
-import com.booking.tickets.entity.movie.model.Movie;
+import com.booking.tickets.entity.movie.model.dto.MovieDtoMapper;
 import com.booking.tickets.entity.movie.model.dto.MovieRequestDto;
 import com.booking.tickets.entity.movie.model.dto.MovieResponseDto;
 import com.booking.tickets.entity.movie.service.MovieService;
@@ -16,35 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/movies")
 public class MovieController {
     public final MovieService movieService;
+    public final MovieDtoMapper movieDtoMapper;
 
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, MovieDtoMapper movieDtoMapper) {
         this.movieService = movieService;
+        this.movieDtoMapper = movieDtoMapper;
     }
 
     @PostMapping
     public void addMovie(@RequestBody MovieRequestDto movieRequestDto) {
-        movieService.add(movieRequestDtoToMovie(movieRequestDto));
+        movieService.add(movieDtoMapper.fromRequestDto(movieRequestDto));
     }
 
     @GetMapping
     public List<MovieResponseDto> getAllMovies() {
         return movieService.getAll()
                 .stream()
-                .map(this::movieToMovieResponseDto)
+                .map(movieDtoMapper::toResponseDto)
                 .collect(Collectors.toList());
-    }
-
-    private Movie movieRequestDtoToMovie(MovieRequestDto movieRequestDto) {
-        Movie movie = new Movie();
-        movie.setTitle(movieRequestDto.getTitle());
-        movie.setDescription(movieRequestDto.getDescription());
-        return movie;
-    }
-
-    private MovieResponseDto movieToMovieResponseDto(Movie movie) {
-        MovieResponseDto movieResponseDto = new MovieResponseDto();
-        movieResponseDto.setId(movie.getId());
-        movieResponseDto.setTitle(movie.getTitle());
-        return movieResponseDto;
     }
 }
