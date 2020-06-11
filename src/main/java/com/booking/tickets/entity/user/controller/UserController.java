@@ -5,7 +5,6 @@ import com.booking.tickets.entity.user.model.dto.UserDtoMapper;
 import com.booking.tickets.entity.user.model.dto.UserResponseDto;
 import com.booking.tickets.entity.user.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +19,8 @@ public class UserController {
         this.userDtoMapper = userDtoMapper;
     }
 
-    @GetMapping("/by-email/{email:.+}")
-    public UserResponseDto getUserByEmail(@PathVariable String email) {
+    @GetMapping("/by-email")
+    public UserResponseDto getUserByEmail(String email) {
         User user = userService.findByEmail(email);
         return userDtoMapper.toResponseDto(user);
     }
