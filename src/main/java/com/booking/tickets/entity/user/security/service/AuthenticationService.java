@@ -1,4 +1,4 @@
-package com.booking.tickets.security.service;
+package com.booking.tickets.entity.user.security.service;
 
 import com.booking.tickets.entity.user.model.User;
 import com.booking.tickets.exception.AuthenticationException;

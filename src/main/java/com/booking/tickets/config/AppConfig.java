@@ -1,4 +1,4 @@
-package com.booking.tickets.context;
+package com.booking.tickets.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
@@ -12,8 +12,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 @Configuration
 @PropertySource("classpath:db.properties")
-@ComponentScan(basePackages =
-        {"com.booking.tickets.entity", "com.booking.tickets.security", "com.booking.tickets.util"})
+@ComponentScan(basePackages = {"com.booking.tickets.entity", "com.booking.tickets.util"})
 public class AppConfig {
     private final Environment env;
 

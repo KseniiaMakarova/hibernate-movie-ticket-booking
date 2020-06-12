@@ -1,6 +1,6 @@
 package com.booking.tickets;
 
-import com.booking.tickets.context.AppConfig;
+import com.booking.tickets.config.AppConfig;
 import com.booking.tickets.entity.cinemahall.model.CinemaHall;
 import com.booking.tickets.entity.cinemahall.service.CinemaHallService;
 import com.booking.tickets.entity.movie.model.Movie;
@@ -11,9 +11,9 @@ import com.booking.tickets.entity.order.service.OrderService;
 import com.booking.tickets.entity.shoppingcart.model.ShoppingCart;
 import com.booking.tickets.entity.shoppingcart.service.ShoppingCartService;
 import com.booking.tickets.entity.user.model.User;
+import com.booking.tickets.entity.user.security.service.AuthenticationService;
 import com.booking.tickets.entity.user.service.UserService;
 import com.booking.tickets.exception.AuthenticationException;
-import com.booking.tickets.security.service.AuthenticationService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
