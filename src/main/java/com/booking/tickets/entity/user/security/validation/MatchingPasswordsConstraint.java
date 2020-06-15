@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MatchingPasswordsConstraint {
-    String message() default "The passwords don't match";
+    String message() default "Invalid password or passwords don't match";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     String password();
