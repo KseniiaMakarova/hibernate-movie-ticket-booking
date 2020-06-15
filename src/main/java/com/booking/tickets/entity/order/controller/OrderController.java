@@ -1,7 +1,6 @@
 package com.booking.tickets.entity.order.controller;
 
 import com.booking.tickets.entity.order.model.dto.OrderDtoMapper;
-import com.booking.tickets.entity.order.model.dto.OrderRequestDto;
 import com.booking.tickets.entity.order.model.dto.OrderResponseDto;
 import com.booking.tickets.entity.order.service.OrderService;
 import com.booking.tickets.entity.shoppingcart.model.ShoppingCart;
@@ -10,9 +9,9 @@ import com.booking.tickets.entity.user.model.User;
 import com.booking.tickets.entity.user.service.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,15 +32,15 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void completeOrder(@RequestBody OrderRequestDto orderRequestDto) {
-        User user = userService.get(orderRequestDto.getUserId());
+    public void completeOrder(Authentication authentication) {
+        User user = userService.findByEmail(authentication.getName());
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         orderService.completeOrder(shoppingCart.getTickets(), user);
     }
 
     @GetMapping
-    public List<OrderResponseDto> getOrderHistoryOfUser(Long userId) {
-        User user = userService.get(userId);
+    public List<OrderResponseDto> getOrderHistoryOfUser(Authentication authentication) {
+        User user = userService.findByEmail(authentication.getName());
         return orderService.getOrderHistory(user)
                 .stream()
                 .map(orderDtoMapper::toResponseDto)
