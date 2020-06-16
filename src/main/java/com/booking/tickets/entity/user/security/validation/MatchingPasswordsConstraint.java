@@ -16,6 +16,4 @@ public @interface MatchingPasswordsConstraint {
     String message() default "Invalid password or passwords don't match";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String password();
-    String repeatedPassword();
 }

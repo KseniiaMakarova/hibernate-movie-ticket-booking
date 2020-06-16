@@ -3,7 +3,7 @@ package com.booking.tickets.entity.user.model.dto;
 import com.booking.tickets.entity.user.security.validation.EmailConstraint;
 import com.booking.tickets.entity.user.security.validation.MatchingPasswordsConstraint;
 
-@MatchingPasswordsConstraint(password = "password", repeatedPassword = "repeatedPassword")
+@MatchingPasswordsConstraint
 public class UserRequestDto {
     @EmailConstraint
     private String login;
