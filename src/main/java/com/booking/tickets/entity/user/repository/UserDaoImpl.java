@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,8 +49,9 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
             CriteriaQuery<User> query
                     = criteriaBuilder.createQuery(User.class);
             Root<User> root = query.from(User.class);
+            root.fetch("roles", JoinType.LEFT);
             return session.createQuery(
-                    query.where(criteriaBuilder.equal(root.get("login"), email)))
+                    query.distinct(true).where(criteriaBuilder.equal(root.get("login"), email)))
                     .uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException(
