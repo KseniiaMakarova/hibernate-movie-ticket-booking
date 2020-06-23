@@ -3,6 +3,7 @@ package com.booking.tickets.entity.cinemahall.repository;
 import com.booking.tickets.dao.GenericDaoImpl;
 import com.booking.tickets.entity.cinemahall.model.CinemaHall;
 import java.util.List;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -19,7 +20,7 @@ public class CinemaHallDaoImpl extends GenericDaoImpl<CinemaHall> implements Cin
     @Override
     public CinemaHall add(CinemaHall element) {
         CinemaHall cinemaHall = super.add(element);
-        LOGGER.info(element + " was inserted to DB");
+        LOGGER.log(Level.INFO, "{} was inserted to DB", element);
         return cinemaHall;
     }
 

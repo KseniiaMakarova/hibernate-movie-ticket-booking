@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String ADMIN = "ADMIN";
+    private static final String USER = "USER";
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
@@ -28,14 +30,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/register").permitAll()
-                .antMatchers(HttpMethod.POST, "/movies/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/cinema-halls/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/movie-sessions/**").hasRole("ADMIN")
-                .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/movies/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/cinema-halls/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/movie-sessions/**").hasRole("USER")
-                .antMatchers("/shopping-carts/**", "/orders/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/movies/**").hasRole(ADMIN)
+                .antMatchers(HttpMethod.POST, "/cinema-halls/**").hasRole(ADMIN)
+                .antMatchers(HttpMethod.POST, "/movie-sessions/**").hasRole(ADMIN)
+                .antMatchers("/users/**").hasRole(ADMIN)
+                .antMatchers(HttpMethod.GET, "/movies/**").hasAnyRole(USER, ADMIN)
+                .antMatchers(HttpMethod.GET, "/cinema-halls/**").hasAnyRole(USER, ADMIN)
+                .antMatchers(HttpMethod.GET, "/movie-sessions/**").hasAnyRole(USER, ADMIN)
+                .antMatchers("/shopping-carts/**", "/orders/**").hasRole(USER)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()

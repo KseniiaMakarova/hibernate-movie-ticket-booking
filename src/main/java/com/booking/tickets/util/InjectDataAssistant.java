@@ -6,6 +6,7 @@ import com.booking.tickets.entity.user.model.User;
 import com.booking.tickets.entity.user.service.UserService;
 import java.util.Set;
 import javax.annotation.PostConstruct;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,7 @@ public class InjectDataAssistant {
         Role adminRole = new Role();
         adminRole.setName(Role.RoleName.ADMIN);
         roleService.add(adminRole);
-        LOGGER.info("USER and ADMIN roles were injected to DB");
+        LOGGER.log(Level.INFO, "USER and ADMIN roles were injected to DB");
     }
 
     private void injectAdmin() {
@@ -48,6 +49,6 @@ public class InjectDataAssistant {
         Role adminRole = roleService.getRoleByName("ADMIN");
         admin.setRoles(Set.of(adminRole));
         userService.add(admin);
-        LOGGER.info("A user with ADMIN role was injected to DB");
+        LOGGER.log(Level.INFO, "A user with ADMIN role was injected to DB");
     }
 }

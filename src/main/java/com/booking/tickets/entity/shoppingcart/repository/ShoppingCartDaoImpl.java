@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -29,7 +30,7 @@ public class ShoppingCartDaoImpl extends GenericDaoImpl<ShoppingCart> implements
     @Override
     public ShoppingCart add(ShoppingCart element) {
         ShoppingCart shoppingCart = super.add(element);
-        LOGGER.info(element + " was inserted to DB");
+        LOGGER.log(Level.INFO, "{} was inserted to DB", element);
         return shoppingCart;
     }
 
@@ -69,7 +70,7 @@ public class ShoppingCartDaoImpl extends GenericDaoImpl<ShoppingCart> implements
             transaction = session.beginTransaction();
             session.update(shoppingCart);
             transaction.commit();
-            LOGGER.info(shoppingCart + " was updated");
+            LOGGER.log(Level.INFO, "{} was updated", shoppingCart);
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();

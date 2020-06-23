@@ -3,6 +3,7 @@ package com.booking.tickets.entity.ticket.repository;
 import com.booking.tickets.dao.GenericDaoImpl;
 import com.booking.tickets.entity.ticket.model.Ticket;
 import java.util.List;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -19,7 +20,7 @@ public class TicketDaoImpl extends GenericDaoImpl<Ticket> implements TicketDao {
     @Override
     public Ticket add(Ticket element) {
         Ticket ticket = super.add(element);
-        LOGGER.info(element + " was inserted to DB");
+        LOGGER.log(Level.INFO, "{} was inserted to DB", element);
         return ticket;
     }
 
