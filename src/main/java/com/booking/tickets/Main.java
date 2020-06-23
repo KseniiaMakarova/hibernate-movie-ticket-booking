@@ -8,8 +8,6 @@ import com.booking.tickets.entity.movie.service.MovieService;
 import com.booking.tickets.entity.moviesession.model.MovieSession;
 import com.booking.tickets.entity.moviesession.service.MovieSessionService;
 import com.booking.tickets.entity.order.service.OrderService;
-import com.booking.tickets.entity.role.model.Role;
-import com.booking.tickets.entity.role.service.RoleService;
 import com.booking.tickets.entity.shoppingcart.model.ShoppingCart;
 import com.booking.tickets.entity.shoppingcart.service.ShoppingCartService;
 import com.booking.tickets.entity.user.model.User;
@@ -41,8 +39,6 @@ public class Main {
             = context.getBean(ShoppingCartService.class);
     private static final OrderService orderService
             = context.getBean(OrderService.class);
-    private static final RoleService roleService
-            = context.getBean(RoleService.class);
 
     public static void main(String[] args) {
         Movie parasite = new Movie();
@@ -88,13 +84,6 @@ public class Main {
         List<MovieSession> availableSessions
                 = movieSessionService.findAvailableSessions(jojoRabbit.getId(), today);
         availableSessions.forEach(System.out::println);
-
-        Role userRole = new Role();
-        userRole.setName(Role.RoleName.USER);
-        roleService.add(userRole);
-        Role adminRole = new Role();
-        adminRole.setName(Role.RoleName.ADMIN);
-        roleService.add(adminRole);
 
         authenticationService.register("kseniia.makarova.kyiv@gmail.com", "12345678");
         try {

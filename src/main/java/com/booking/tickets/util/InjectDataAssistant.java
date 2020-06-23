@@ -1,4 +1,4 @@
-package com.booking.tickets.controller;
+package com.booking.tickets.util;
 
 import com.booking.tickets.entity.role.model.Role;
 import com.booking.tickets.entity.role.service.RoleService;
@@ -9,17 +9,17 @@ import javax.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
-@Controller
-public class InjectDataController {
-    private static final Logger LOGGER = LogManager.getLogger(InjectDataController.class);
+@Component
+public class InjectDataAssistant {
+    private static final Logger LOGGER = LogManager.getLogger(InjectDataAssistant.class);
     private final RoleService roleService;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public InjectDataController(RoleService roleService, UserService userService,
-                                PasswordEncoder passwordEncoder) {
+    public InjectDataAssistant(RoleService roleService, UserService userService,
+                               PasswordEncoder passwordEncoder) {
         this.roleService = roleService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
