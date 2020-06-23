@@ -5,7 +5,7 @@ import com.booking.tickets.entity.role.service.RoleService;
 import com.booking.tickets.entity.shoppingcart.service.ShoppingCartService;
 import com.booking.tickets.entity.user.model.User;
 import com.booking.tickets.entity.user.service.UserService;
-import com.booking.tickets.exception.AuthenticationException;
+import com.booking.tickets.exception.WrongCredentialsAuthenticationException;
 import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,10 +28,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public User login(String email, String password) throws AuthenticationException {
+    public User login(String email, String password)
+            throws WrongCredentialsAuthenticationException {
         User user = userService.findByEmail(email);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-            throw new AuthenticationException("The login or password is incorrect");
+            throw new WrongCredentialsAuthenticationException(
+                    "The login or password is incorrect");
         }
         return user;
     }
