@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userService.findByEmail(username);
+        User user = userService.getByEmail(username);
         UserBuilder userBuilder;
         if (user != null) {
             userBuilder

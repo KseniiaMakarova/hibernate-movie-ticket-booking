@@ -46,7 +46,7 @@ public class InjectDataAssistant {
         User admin = new User();
         admin.setLogin("admin@gmail.com");
         admin.setPassword(passwordEncoder.encode("1234"));
-        Role adminRole = roleService.getRoleByName("ADMIN");
+        Role adminRole = roleService.getByName("ADMIN");
         admin.setRoles(Set.of(adminRole));
         userService.add(admin);
         LOGGER.log(Level.INFO, "A user with ADMIN role was injected to DB");

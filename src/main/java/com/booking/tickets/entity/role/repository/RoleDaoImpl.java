@@ -42,7 +42,7 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
     }
 
     @Override
-    public Role getRoleByName(String roleName) {
+    public Role getByName(String roleName) {
         try (Session session = sessionFactory.openSession()) {
             Role.RoleName roleNameObject = Role.RoleName.valueOf(roleName);
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

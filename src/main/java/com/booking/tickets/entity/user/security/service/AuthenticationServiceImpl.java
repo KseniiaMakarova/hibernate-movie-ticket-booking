@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password)
             throws WrongCredentialsAuthenticationException {
-        User user = userService.findByEmail(email);
+        User user = userService.getByEmail(email);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
             throw new WrongCredentialsAuthenticationException(
                     "The login or password is incorrect");
@@ -43,10 +43,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = new User();
         user.setLogin(email);
         user.setPassword(passwordEncoder.encode(password));
-        Role userRole = roleService.getRoleByName("USER");
+        Role userRole = roleService.getByName("USER");
         user.setRoles(Set.of(userRole));
         User userFromDb = userService.add(user);
-        shoppingCartService.registerNewShoppingCart(userFromDb);
+        shoppingCartService.createShoppingCart(userFromDb);
         return userFromDb;
     }
 }
