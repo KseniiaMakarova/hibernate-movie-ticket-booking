@@ -28,8 +28,7 @@ The following entities are used: Movie, CinemaHall, MovieSession, Ticket, User, 
 
 When authenticated, users with both ADMIN and USER roles are able to:
 
-    - get all Movies CinemaHalls and available MovieSessions
-    - get all CinemaHalls
+    - get all Movies and CinemaHalls
     - get all available MovieSessions
 
 Users with ADMIN role only are able to:
