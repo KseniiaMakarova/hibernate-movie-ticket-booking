@@ -65,7 +65,6 @@ Some other project features were implemented using:
 - custom SecurityConfigurerAdapter and GenericFilterBean - for **JWT user authentication**
 - both **custom** and Hibernate built-in annotations - for **DTO fields validation**
 - custom **ResponseEntityExceptionHandler implementation**
-- **Mockito Framework** - for JUnit testing of the login endpoint
 - Log4j2 library
 - Maven Checkstyle Plugin, Travis CI and **SonarCloud Continuous Code Quality Tool**
 
