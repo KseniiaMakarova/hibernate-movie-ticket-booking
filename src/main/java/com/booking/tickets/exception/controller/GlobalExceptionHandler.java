@@ -2,7 +2,6 @@ package com.booking.tickets.exception.controller;
 
 import com.booking.tickets.exception.WrongCredentialsAuthenticationException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +37,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
-        List<String> causes = Arrays.stream(ex.getSuppressed())
-                .map(Throwable::getMessage)
-                .collect(Collectors.toList());
-        body.put("causes", causes);
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
 }
