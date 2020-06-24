@@ -87,15 +87,15 @@ Here are the steps for you to follow:
 - Execute the following line in MySQL RDBMS in order to **create the schema**: 
 
       CREATE SCHEMA `ticket_booking` DEFAULT CHARACTER SET utf8;
-- Enter your **own username and password** in _src\main\resources\db.properties_ class on lines 3-4.
+- Enter your **own username and password** in _src/main/resources/db.properties_ class on lines 3-4.
 - Run the project via Tomcat configuration.
 - To access endpoints, use **Postman** or any alternative tool capable of making POST queries and altering request headers.
 
 A user with ADMIN role will be registered automatically with an email "admin@gmail.com" and a password "1234".
 
-All subsequent users you will register will have the USER role.
+Any subsequent user that you will register will have the USER role.
 
-After a successful login, you will receive the JWT token which you should pass in the Authentication header in any subsequent request if you wish to remain authenticated as a current user.
+After a successful login, you will receive the JWT token. If you wish to remain authenticated as a current user, you should provide the token in the Authentication header in any subsequent request.
 
 ---
 ## Author
