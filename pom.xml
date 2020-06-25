@@ -17,6 +17,10 @@
         <maven.checkstyle.plugin.configLocation>
             https://raw.githubusercontent.com/mate-academy/style-guides/master/java/checkstyle.xml
         </maven.checkstyle.plugin.configLocation>
+        <sonar.projectKey>KseniiaMakarova_hibernate-movie-ticket-booking</sonar.projectKey>
+        <sonar.organization>kseniia-makarova</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>8a184726682360682018f106ac472eae537cd95a</sonar.login>
         <spring.version>5.2.6.RELEASE</spring.version>
         <spring.security.version>5.3.3.RELEASE</spring.security.version>
     </properties>
@@ -92,6 +96,11 @@
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
             <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
         </dependency>
     </dependencies>
 

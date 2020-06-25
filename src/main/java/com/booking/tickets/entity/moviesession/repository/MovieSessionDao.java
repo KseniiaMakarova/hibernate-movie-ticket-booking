@@ -6,5 +6,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface MovieSessionDao extends GenericDao<MovieSession> {
-    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+    List<MovieSession> getAvailableSessions(Long movieId, LocalDate date);
 }

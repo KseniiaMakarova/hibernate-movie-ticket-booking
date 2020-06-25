@@ -1,5 +1,6 @@
 package com.booking.tickets.entity.order.controller;
 
+import com.booking.tickets.entity.order.model.Order;
 import com.booking.tickets.entity.order.model.dto.OrderDtoMapper;
 import com.booking.tickets.entity.order.model.dto.OrderResponseDto;
 import com.booking.tickets.entity.order.service.OrderService;
@@ -32,15 +33,16 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void completeOrder(Authentication authentication) {
-        User user = userService.findByEmail(authentication.getName());
+    public OrderResponseDto completeOrder(Authentication authentication) {
+        User user = userService.getByEmail(authentication.getName());
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
-        orderService.completeOrder(shoppingCart.getTickets(), user);
+        Order order = orderService.completeOrder(shoppingCart.getTickets(), user);
+        return orderDtoMapper.toResponseDto(order);
     }
 
     @GetMapping
     public List<OrderResponseDto> getOrderHistoryOfUser(Authentication authentication) {
-        User user = userService.findByEmail(authentication.getName());
+        User user = userService.getByEmail(authentication.getName());
         return orderService.getOrderHistory(user)
                 .stream()
                 .map(orderDtoMapper::toResponseDto)

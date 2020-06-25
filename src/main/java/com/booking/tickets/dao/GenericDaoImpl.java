@@ -50,6 +50,8 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     protected T get(Class<T> clazz, Long id) {
-        return sessionFactory.openSession().get(clazz, id);
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(clazz, id);
+        }
     }
 }

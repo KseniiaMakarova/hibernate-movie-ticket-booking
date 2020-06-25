@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -29,7 +30,7 @@ public class MovieSessionDaoImpl extends GenericDaoImpl<MovieSession> implements
     @Override
     public MovieSession add(MovieSession element) {
         MovieSession movieSession = super.add(element);
-        LOGGER.info(element + " was inserted to DB");
+        LOGGER.log(Level.INFO, "{} was inserted to DB", element);
         return movieSession;
     }
 
@@ -44,7 +45,7 @@ public class MovieSessionDaoImpl extends GenericDaoImpl<MovieSession> implements
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+    public List<MovieSession> getAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> query

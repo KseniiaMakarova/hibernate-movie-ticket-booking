@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -26,7 +27,7 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
     @Override
     public Role add(Role element) {
         Role role = super.add(element);
-        LOGGER.info(element + " was inserted to DB");
+        LOGGER.log(Level.INFO, "{} was inserted to DB", element);
         return role;
     }
 
@@ -41,7 +42,7 @@ public class RoleDaoImpl extends GenericDaoImpl<Role> implements RoleDao {
     }
 
     @Override
-    public Role getRoleByName(String roleName) {
+    public Role getByName(String roleName) {
         try (Session session = sessionFactory.openSession()) {
             Role.RoleName roleNameObject = Role.RoleName.valueOf(roleName);
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

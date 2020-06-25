@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @PropertySource("classpath:db.properties")
-@ComponentScan(basePackages = {"com.booking.tickets.entity"})
+@ComponentScan(basePackages = {"com.booking.tickets.entity", "com.booking.tickets.util"})
 public class AppConfig {
     private final Environment env;
 
