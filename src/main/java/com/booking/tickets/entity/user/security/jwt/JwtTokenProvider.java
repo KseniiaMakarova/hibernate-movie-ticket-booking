@@ -21,9 +21,9 @@ import org.springframework.stereotype.Component;
 public class JwtTokenProvider {
     private static final int HEADER_OFFSET = 7;
     @Value("${security.jwt.token.expire-length:3600000}")
-    private static final long VALID_PERIOD = 3_600_000;
+    private long validPeriod;
     @Value("${security.jwt.token.secret-key:secret}")
-    private String secretKey = "secret";
+    private String secretKey;
     private final UserDetailsService userDetailsService;
 
     public JwtTokenProvider(UserDetailsService userDetailsService) {
@@ -39,7 +39,7 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", roles);
         Date now = new Date();
-        Date validity = new Date(now.getTime() + VALID_PERIOD);
+        Date validity = new Date(now.getTime() + validPeriod);
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
