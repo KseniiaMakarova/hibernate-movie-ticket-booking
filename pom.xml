@@ -22,7 +22,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.login>8a184726682360682018f106ac472eae537cd95a</sonar.login>
         <spring.version>5.2.6.RELEASE</spring.version>
-        <spring.security.version>5.3.3.RELEASE</spring.security.version>
+        <spring.security.version>5.3.10.RELEASE</spring.security.version>
     </properties>
 
     <dependencies>
